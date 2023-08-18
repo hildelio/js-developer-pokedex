@@ -23,6 +23,24 @@ function convertPokemonToLi(pokemon) {
     `
 }
 
+// Não concluído
+
+pokemonList.addEventListener('click', (event) => {
+    const clickedPokemonElement = event.target.closest('.pokemon');
+    if (clickedPokemonElement) {
+        const pokemonId = clickedPokemonElement.getAttribute('data-id');
+        const selectedPokemon = pokemons.find(pokemon => pokemon.number === parseInt(pokemonId));
+
+        pokeApi.getPokemonDetail(selectedPokemon).then((pokemon) => {
+            const modal = document.getElementById('pokemonModal');
+            const modalContent = modal.querySelector('.modal-content');
+            modalContent.innerHTML = modal.qauerySelector('.modal-content').innerHTML = convertPokemonToLi(pokemon);
+        modal.style.display = 'block';
+        });
+    }
+});
+
+
 function loadPokemonItens(offset, limit) {
     pokeApi.getPokemons(offset, limit).then((pokemons = []) => {
         const newHtml = pokemons.map(convertPokemonToLi).join('')
